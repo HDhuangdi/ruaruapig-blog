@@ -1,4 +1,6 @@
-const ipURL = 'http://127.0.0.1:7001/default/';
+const ipURL = `${
+  process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:7001' : ''
+}/admin/`;
 const servicePath = {
   getArticleList: ipURL + 'getArticleList', //首页
   article: ipURL + 'article/', //详细页
