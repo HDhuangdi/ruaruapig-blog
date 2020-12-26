@@ -7,14 +7,14 @@ import { CalendarOutlined } from '@ant-design/icons';
 import Author from '../../components/Author';
 import Advert from '../../components/Advert';
 import Footer from '../../components/Footer';
+import CodeBlock from '../../components/CodeBlock';
 import '../../static/style/pages/details.less';
 import servicePath from '../../config/apiURL';
-import { IArticle } from '../../types/index';
 import ReactMarkdown from 'react-markdown';
 
 interface IProps {
   asyncData: {
-    article: IArticle;
+    article: any;
   };
 }
 
@@ -53,7 +53,12 @@ const Details: NextPage<IProps> = (props: IProps) => {
             </div>
             {/* 博客内容 */}
             <div className="detailed-content">
-              <ReactMarkdown source={markdown}></ReactMarkdown>
+              <ReactMarkdown
+                source={markdown}
+                renderers={{
+                  code: CodeBlock,
+                }}
+              ></ReactMarkdown>
             </div>
           </div>
         </Col>

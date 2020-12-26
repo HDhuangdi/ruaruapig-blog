@@ -8,14 +8,14 @@ import Header from '../components/Header';
 import Author from '../components/Author';
 import Advert from '../components/Advert';
 import Footer from '../components/Footer';
-import { Row, Col, List, Breadcrumb } from 'antd';
+import { Row, Col, List, Breadcrumb, Pagination } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import '../static/style/pages/index.less';
-import { IArticle } from '../types/index';
 
 interface IProps {
   asyncData: {
-    articleList: IArticle[];
+    articleList: any;
+    articleCount: number;
   };
 }
 
@@ -23,12 +23,24 @@ const BlogList: NextPage<IProps> = (props: IProps) => {
   const { asyncData } = props;
 
   const [mylist, setMylist] = useState(asyncData.articleList);
+  const [pageSize, setPageSize] = useState(10);
   useEffect(() => {
     setMylist(asyncData.articleList);
   }, [asyncData.articleList]);
 
+  const onPageChange = async (page: number, pageSize?: number | undefined) => {
+    if (pageSize) {
+      setPageSize(pageSize);
+    }
+    const res = await axios.get(
+      servicePath.getArticleList + '/' + page + '/' + pageSize
+    );
+
+    setMylist(res.data.data);
+  };
+
   return (
-    <div>
+    <div className="index">
       <Head>
         <title>博客</title>
       </Head>
@@ -49,7 +61,7 @@ const BlogList: NextPage<IProps> = (props: IProps) => {
             header={<div>最新日志</div>}
             itemLayout="vertical"
             dataSource={mylist}
-            renderItem={(item) => (
+            renderItem={(item: any) => (
               <List.Item>
                 <div className="list-title">
                   <Link href={'/details/' + item.id}>
@@ -72,6 +84,14 @@ const BlogList: NextPage<IProps> = (props: IProps) => {
           <Advert />
         </Col>
       </Row>
+      <div className="pagination">
+        <Pagination
+          defaultCurrent={1}
+          total={props.asyncData.articleCount}
+          pageSize={pageSize}
+          onChange={onPageChange}
+        />
+      </div>
       <Footer></Footer>
     </div>
   );
@@ -80,8 +100,15 @@ const BlogList: NextPage<IProps> = (props: IProps) => {
 BlogList.getInitialProps = async (ctx: NextPageContext) => {
   let { id } = ctx.query;
   id = id || '1';
-  const res = await axios.get(servicePath.getArticleListByTypeId + id);
-  return { asyncData: { articleList: res.data } };
+  const articleList = await axios.get(servicePath.getArticleList + '/1/10');
+  const articleCount = await axios.get(servicePath.getArticleCount);
+
+  return {
+    asyncData: {
+      articleList: articleList.data.data,
+      articleCount: Number(articleCount.data),
+    },
+  };
 };
 
 export default BlogList;
