@@ -1,110 +1,85 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import servicePath from '../config/apiURL';
-import { NextPage, NextPageContext } from 'next';
-import Link from 'next/link';
+import { NextPageContext } from 'next';
 import axios from 'axios';
-import Head from 'next/head';
-import Header from '../components/Header';
-import Author from '../components/Author';
-import Advert from '../components/Advert';
-import Footer from '../components/Footer';
-import { Row, Col, List, Breadcrumb, Pagination } from 'antd';
-import { CalendarOutlined } from '@ant-design/icons';
+import { Row, Col } from 'antd';
+import MySider from '../Layout/Sider';
+import MyHeader from '../Layout/Header';
+import MyContent from '../Layout/Content';
 import '../static/style/pages/index.less';
 
-interface IProps {
-  asyncData: {
-    articleList: any;
-    articleCount: number;
-  };
-}
+const BlogList = () => {
+  let [height, setHeight] = useState(0);
+  let [index, setIndex] = useState(0);
 
-const BlogList: NextPage<IProps> = (props: IProps) => {
-  const { asyncData } = props;
-
-  const [mylist, setMylist] = useState(asyncData.articleList);
-  const [pageSize, setPageSize] = useState(10);
   useEffect(() => {
-    setMylist(asyncData.articleList);
-  }, [asyncData.articleList]);
-
-  const onPageChange = async (page: number, pageSize?: number | undefined) => {
-    if (pageSize) {
-      setPageSize(pageSize);
+    if (process.browser) {
+      setHeight(window.innerHeight);
+      window.onclick = showCursorText;
     }
-    const res = await axios.get(
-      servicePath.getArticleList + '/' + page + '/' + pageSize
-    );
+  });
 
-    setMylist(res.data.data);
+  let cursorText = [
+    '富强',
+    '民主',
+    '文明',
+    '和谐',
+    '自由',
+    '平等',
+    '公正',
+    '法治',
+    '爱国',
+    '敬业',
+    '诚信',
+    '友善',
+  ];
+
+  const showCursorText = (e: MouseEvent) => {
+    let myIndex = index;
+    if (myIndex >= cursorText.length) {
+      myIndex = 0;
+    }
+    let text = cursorText[myIndex];
+    let htmlSpanElement = document.createElement('span');
+    htmlSpanElement.innerHTML = text;
+    htmlSpanElement.style.position = 'absolute';
+    htmlSpanElement.style.top = e.clientY - 10 + 'px';
+    htmlSpanElement.style.left = e.clientX + 'px';
+    htmlSpanElement.style.transition = 'all 0.5s';
+    htmlSpanElement.style.animation = 'text-show 0.5s forwards';
+    htmlSpanElement.style.userSelect = 'none';
+    document.body.appendChild(htmlSpanElement);
+    setIndex(myIndex + 1);
   };
 
   return (
-    <div className="index">
-      <Head>
-        <title>博客</title>
-      </Head>
-      <Header />
-      <Row className="comm-main" justify="center">
-        <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={14}>
-          <div className="bread-div">
-            <Breadcrumb>
-              <Breadcrumb.Item>
-                <a href="/">首页</a>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>
-                <a href="/list">列表</a>
-              </Breadcrumb.Item>
-            </Breadcrumb>
-          </div>
-          <List
-            header={<div>最新日志</div>}
-            itemLayout="vertical"
-            dataSource={mylist}
-            renderItem={(item: any) => (
-              <List.Item>
-                <div className="list-title">
-                  <Link href={'/details/' + item.id}>
-                    <a href="">{item.title}</a>
-                  </Link>
-                </div>
-                <div className="list-icon">
-                  <span>
-                    <CalendarOutlined></CalendarOutlined>
-                    {item.add_time}
-                  </span>
-                </div>
-                <div className="list-context">{item.introduce}</div>
-              </List.Item>
-            )}
-          />
+    <div className="index" style={{ height }}>
+      <Row className="index-row">
+        <Col className="index-left" xs={0} sm={0} md={0} lg={6} xl={5}>
+          <MySider></MySider>
         </Col>
-        <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
-          <Author />
-          <Advert />
+        <Col className="index-right" xs={24} sm={24} md={24} lg={18} xl={19}>
+          <MyHeader></MyHeader>
+          <MyContent></MyContent>
         </Col>
       </Row>
-      <div className="pagination">
-        <Pagination
-          defaultCurrent={1}
-          total={props.asyncData.articleCount}
-          pageSize={pageSize}
-          onChange={onPageChange}
-        />
-      </div>
-      <Footer></Footer>
     </div>
   );
 };
 
 BlogList.getInitialProps = async (ctx: NextPageContext) => {
-  let { id } = ctx.query;
-  id = id || '1';
-  const articleList = await axios.get(servicePath.getArticleList + '/1/10');
+  let { page, pageSize } = ctx.query;
+  let _page = Number(page as string) || 1;
+  let _pageSize = Number(pageSize as string) || 10;
+  const articleList = await axios.get(
+    servicePath.getArticleList + `/${_page}/${_pageSize}`
+  );
   const articleCount = await axios.get(servicePath.getArticleCount);
 
   return {
     asyncData: {
+      page: _page,
+      pageSize: _pageSize,
       articleList: articleList.data.data,
       articleCount: Number(articleCount.data),
     },

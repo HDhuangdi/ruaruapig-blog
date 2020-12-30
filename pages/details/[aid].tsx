@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import { NextPage, NextPageContext } from 'next';
 import axios from 'axios';
-import Header from '../../components/Header';
+import Header from '../../Layout/Header';
 import { Row, Col, Breadcrumb, Affix } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import Author from '../../components/Author';
 import Advert from '../../components/Advert';
-import Footer from '../../components/Footer';
+import Footer from '../../Layout/Footer';
 import CodeBlock from '../../components/CodeBlock';
 import '../../static/style/pages/details.less';
 import servicePath from '../../config/apiURL';

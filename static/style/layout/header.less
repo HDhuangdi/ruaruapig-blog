@@ -1,0 +1,66 @@
+.my-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  box-shadow: inset 1px -1px 2px #e0dfdf;
+  padding: 0 20px;
+  .search {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
+    input {
+      width: 85%;
+      border-top-left-radius: 18px;
+      border-bottom-left-radius: 18px;
+      box-shadow: 1px 1px 4px #ececec;
+      font-size: 12px;
+      height: 100%;
+      padding: 0 13px;
+      outline: none;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+      &:focus {
+        border: 2px solid #85a7ff;
+        background-color: #fff !important;
+      }
+      &:hover {
+        background-color: #e8e8e8;
+      }
+      &::placeholder {
+        font-size: 12px;
+      }
+    }
+    i {
+      width: 15%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      border-top-right-radius: 18px;
+      border-bottom-right-radius: 18px;
+    }
+  }
+  .icons {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    i {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 50px;
+      transition: background-color 0.5s;
+      &:hover {
+        background-color: #e8e8e8;
+      }
+    }
+  }
+}

@@ -1,0 +1,89 @@
+.sider {
+  height: 100%;
+  background-color: #3b3f50;
+  position: relative;
+  .logo-container {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 160px;
+      height: 29px;
+    }
+  }
+  .divider {
+    height: 1px;
+    background-color: #313131;
+    margin-top: 20px;
+  }
+  .author-container {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 96px;
+      border-radius: 50%;
+    }
+    .author {
+      color: #eaebed;
+      margin-top: 5px;
+    }
+    .autograph {
+      font-size: 12px;
+      color: #8b8e99;
+    }
+  }
+  .nav-bar {
+    padding: 10px 0;
+    .title {
+      padding: 0 15px;
+      color: #8b8e99;
+      font-size: 12px;
+    }
+    .link-container {
+      margin-top: 10px;
+      padding: 10px 20px;
+      color: #b4b6bd;
+      transition: background-color 0.3s;
+      a {
+        color: #b4b6bd;
+        margin-left: 10px;
+      }
+      &:hover {
+        background-color: #555972;
+        span::before {
+          color: #fff;
+        }
+        a {
+          color: #fff;
+        }
+      }
+    }
+  }
+  .footer-container {
+    height: 25px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: #1f222d;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: #b4b6bd;
+    span {
+      &::before {
+        transition: color 0.3s;
+        font-size: 13px;
+      }
+      &:hover {
+        &::before {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
