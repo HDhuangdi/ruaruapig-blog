@@ -9,6 +9,9 @@
 }
 @media screen and (min-width: 768px) and (max-width: 992px) {
   .index {
+    .scroll-to-top {
+      display: none !important;
+    }
   }
 }
 @media screen and (min-width: 576px) and (max-width: 768px) {
@@ -35,11 +38,21 @@
 .index {
   position: relative;
   padding: 0 10%;
-  background-image: linear-gradient(#c8a9a9, #96959a, #777c87);
+  background-image: linear-gradient(#777c87, #96959a, #c8a9a9);
+  .scroll-to-top {
+    background-image: url('../../images/index/scroll.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 900px;
+    width: 70px;
+    display: block;
+    position: fixed;
+    right: 50px;
+    top: -200px;
+    z-index: 2;
+  }
   .index-row {
     height: 100%;
-    .index-left {
-    }
     .index-right {
       height: 100%;
       overflow-y: scroll;

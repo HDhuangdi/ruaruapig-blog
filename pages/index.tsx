@@ -4,8 +4,8 @@ import { NextPageContext } from 'next';
 import axios from 'axios';
 import { Row, Col } from 'antd';
 import MySider from '../Layout/Sider';
-import MyHeader from '../Layout/Header';
 import MyContent from '../Layout/Content';
+import MyHeader from '../Layout/Header';
 import '../static/style/pages/index.less';
 
 const BlogList = () => {
@@ -54,6 +54,7 @@ const BlogList = () => {
 
   return (
     <div className="index" style={{ height }}>
+      <div className="scroll-to-top"></div>
       <Row className="index-row">
         <Col className="index-left" xs={0} sm={0} md={0} lg={6} xl={5}>
           <MySider></MySider>

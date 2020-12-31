@@ -7,7 +7,7 @@ module.exports = withLess(
   withCss({
     webpack(config, options) {
       config.module.rules.push({
-        test: /\.(cur)(\?.*)?$/,
+        test: /\.(cur|png|jpg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           esModule: false,

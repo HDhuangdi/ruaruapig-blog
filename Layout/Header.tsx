@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <div className="my-header">
+    <header className="my-header">
       <div className="search">
         <input type="text" placeholder="Search..." />
         <i className="iconfont iconsousuo"></i>
@@ -13,10 +13,9 @@ const Header = () => {
         <Link href="https://github.com/HDhuangdi">
           <i className="iconfont icongithub"></i>
         </Link>
-
         <i className="iconfont icon223yonghu_mima_yuechi3"></i>
       </div>
-    </div>
+    </header>
   );
 };
 

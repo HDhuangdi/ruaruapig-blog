@@ -29,7 +29,7 @@ export default class MyApp extends App {
           />
           <link
             rel="stylesheet"
-            href="http://at.alicdn.com/t/font_2299715_fl9u14wq5vv.css"
+            href="http://at.alicdn.com/t/font_2299715_p736nwlatn.css"
           />
         </Head>
         <ConfigProvider locale={zhCN}>
