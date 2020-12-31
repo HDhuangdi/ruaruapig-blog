@@ -1,0 +1,106 @@
+@import './comm.less';
+@media screen and (min-width: 1200px) {
+  #app {
+  }
+}
+@media screen and (min-width: 992px) and(max-width: 1200px) {
+  #app {
+    padding: 0 !important;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  #app {
+    padding: 0 !important;
+    .scroll-to-top {
+      display: none !important;
+    }
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 768px) {
+  #app {
+    padding: 0 !important;
+  }
+}
+@media screen and (max-width: 576px) {
+  #app {
+    padding: 0 !important;
+  }
+}
+
+@keyframes text-show {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate(0, -100%);
+  }
+}
+
+@keyframes scroll-to-top {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, -2%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@font-face {
+  font-family: web-font;
+  src: url('../../font/poiretone.ttf');
+}
+
+* {
+  cursor: url('../../images/index/default.cur'), default;
+  font-family: web-font, sans-serif !important;
+  &::selection {
+    color: #fff;
+    background: #3d4c50;
+  }
+  a {
+    cursor: @cursorPointer;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+}
+
+#app {
+  position: relative;
+  padding: 0 10%;
+  background-image: linear-gradient(#777c87, #96959a, #c8a9a9);
+  .scroll-to-top {
+    background-image: url('../../images/index/scroll.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 900px;
+    width: 70px;
+    display: block;
+    position: fixed;
+    right: 80px;
+    top: -10000px;
+    z-index: 2;
+    animation: scroll-to-top linear 2s infinite;
+    transition: top 1s;
+    cursor: url('../../images/index/pointer.cur'), pointer;
+    &.show {
+      top: -250px;
+    }
+  }
+  .index-row {
+    height: 100%;
+    .index-right {
+      height: 100%;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}

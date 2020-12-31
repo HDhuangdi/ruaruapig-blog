@@ -1,87 +1,175 @@
-import Head from 'next/head';
-import { NextPage, NextPageContext } from 'next';
-import axios from 'axios';
-import Header from '../../Layout/Header';
-import { Row, Col, Breadcrumb, Affix } from 'antd';
-import { CalendarOutlined } from '@ant-design/icons';
-import Author from '../../components/Author';
-import Advert from '../../components/Advert';
-import Footer from '../../Layout/Footer';
-import CodeBlock from '../../components/CodeBlock';
-import '../../static/style/pages/details.less';
-import servicePath from '../../config/apiURL';
-import ReactMarkdown from 'react-markdown';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import '../../static/style/pages/article-details.less';
+import marked from 'marked';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css';
 
-interface IProps {
-  asyncData: {
-    article: any;
-  };
-}
+const Article = () => {
+  const [html, setHtml] = useState('');
+  useEffect(() => {
+    marked.setOptions({
+      renderer: new marked.Renderer(),
+      gfm: true,
+      tables: true,
+      breaks: true,
+      pedantic: false,
+      sanitize: true,
+      smartLists: true,
+      smartypants: false,
+      highlight(code: string) {
+        return hljs.highlightAuto(code).value;
+      },
+    });
+    setHtml(markdown ? marked(markdown) : null);
+    setTimeout(() => {
+      hljs.initHighlighting();
+    }, 500);
+  }, []);
 
-const Details: NextPage<IProps> = (props: IProps) => {
-  const { article } = props.asyncData;
-  let markdown = article.article_content;
-
+  let markdown =
+    '## 介绍 \n' +
+    '软件工程中，我们不仅要创建一致的定义良好的API，同时也要考虑**可重用性**。 组件不仅能够支持当前的数据类型，同时也能**支持未来的数据类型**，这在创建大型系统时为你提供了十分灵活的功能。\n' +
+    '使用**泛型**来创建可重用的组件，一个组件可以**支持多种类型的数据**。 这样用户就可以以自己的数据类型来使用组件。\n' +
+    '\n' +
+    '如果一个函数不使用泛型的话，如：\n' +
+    '```typescript\n' +
+    'function fn(arg: number): number {\n' +
+    '    return arg;\n' +
+    '}\n' +
+    '```\n' +
+    '`fn`函数只能传入number类型的值，也只能返回number类型的值。\n' +
+    '\n' +
+    ' - 如果我们现在有一个需求：需要`fn`函数既支持传入`number`类型，也支持传入`string`类型，且传入什么类型，返回值也需要是什么类型。\n' +
+    '\n' +
+    '这时就需要用到**泛型**了。\n' +
+    '\n' +
+    '泛型标识符为`<T>,`其中`T`可为任何字母，但是一般都写作`T`，`fn`函数使用`<T>`来捕获传入的类型。\n' +
+    '\n' +
+    '以下为改造后的`fn`函数：\n' +
+    '```typescript\n' +
+    'function fn<T>(arg: T): T {\n' +
+    '    return arg;\n' +
+    '}\n' +
+    'console.log(fn<nubmer>(123))  // 123 \n' +
+    "console.log(fn<string>('你说啥子'))  //你说啥子\n" +
+    '```\n' +
+    '\n' +
+    '> 其实，泛型就是让函数**调用**时（类实例创建时）制定类型，而不是函数（类）定义时制定类型。\n' +
+    '\n' +
+    '同时，泛型也可以用于类的类型约束\n' +
+    '```typescript\n' +
+    '//泛型类\n' +
+    'class MinClass<T> {\n' +
+    '  list: T[] = [];\n' +
+    '  add(num: T): void {\n' +
+    '    this.list.push(num);\n' +
+    '  }\n' +
+    '  /**\n' +
+    '   * 寻找一个数组中最小值\n' +
+    '   * @method getMin\n' +
+    '   * @returns {T} 最小值\n' +
+    '   */\n' +
+    '  getMin(): T {\n' +
+    '    let min = this.list[0];\n' +
+    '    for (let index = 0, length = this.list.length; index < length; index++) {\n' +
+    '      if (min > this.list[index]) {\n' +
+    '        min = this.list[index];\n' +
+    '      }\n' +
+    '    }\n' +
+    '    return min;\n' +
+    '  }\n' +
+    '}\n' +
+    '//实例\n' +
+    'var m = new MinClass<number>();\n' +
+    'm.add(1);\n' +
+    'm.add(2);\n' +
+    'm.add(13);\n' +
+    'm.add(-1);\n' +
+    'console.log(m.getMin());  //-1\n' +
+    '\n' +
+    'var m2 = new MinClass<string>();\n' +
+    'm.add("z");\n' +
+    'm.add("b");\n' +
+    'm.add("c");\n' +
+    'm.add("d");\n' +
+    'console.log(m.getMin());  //b\n' +
+    '```\n' +
+    '\n' +
+    '其实，泛型还可用于接口的描述\n' +
+    '```typescript\n' +
+    '//泛型接口\n' +
+    '\n' +
+    '/**\n' +
+    ' * @interface ConfigFN\n' +
+    ' */\n' +
+    'interface ConfigFN {\n' +
+    '  <T>(value: T): T;\n' +
+    '}\n' +
+    'var getData: ConfigFN = function (value) {\n' +
+    '  return value;\n' +
+    '};\n' +
+    'console.log(getData<number>(123));  //123\n' +
+    '```\n' +
+    '也可以对泛型进行约束\n' +
+    '```typescript\n' +
+    'function getNum<T extends number | string>(num: T): number {\n' +
+    '  return Number(num);\n' +
+    '}\n' +
+    '\n' +
+    'getNum("123");\n' +
+    'getNum(123);\n' +
+    'getNum(true) //报错 类型“boolean”的参数不能赋给类型“string | number”的参数。\n' +
+    '```';
   return (
-    <div>
-      <Head>
-        <title>{article.title}</title>
-      </Head>
-      <Header />
-      <Row className="comm-main" justify="center">
-        <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={14}>
-          {/* 面包屑导航 */}
-          <div>
-            <div className="bread-div">
-              <Breadcrumb>
-                <Breadcrumb.Item>
-                  <a href="/">首页</a>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>{article.title}</Breadcrumb.Item>
-              </Breadcrumb>
-            </div>
-            <div>
-              {/* 博客标题 */}
-              <div className="detailed-title">{article.title}</div>
-            </div>
-            {/* 博客信息 */}
-            <div className="list-icon center">
-              <span>
-                <CalendarOutlined />
-                {article.add_time}
-              </span>
-            </div>
-            {/* 博客内容 */}
-            <div className="detailed-content">
-              <ReactMarkdown
-                source={markdown}
-                renderers={{
-                  code: CodeBlock,
-                }}
-              ></ReactMarkdown>
-            </div>
-          </div>
-        </Col>
-        {/* 右侧信息 */}
-        <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
-          <Author></Author>
-          <Advert></Advert>
-          <Affix offsetTop={5}>
-            <div className="detailed-nav comm-box">
-              <div className="nav-title">文章目录</div>
-            </div>
-          </Affix>
-        </Col>
-      </Row>
-      <Footer></Footer>
+    <div className="article-details">
+      <div className="title-container">
+        <h1>宝塔(BT)面板安装 AList 阿里云盘列表程序</h1>
+        <div className="info-container">
+          <i className="iconfont icongeren"></i>
+          <span>抓住一股仙气</span>
+          <i className="iconfont iconshijian"></i>
+          <span>2020 年 12 月 28 日</span>
+          <i className="iconfont iconliulan"></i>
+          <span>441次浏览</span>
+          <i className="iconfont iconpinglun2"></i>
+          <span>3 条评论</span>
+          <i className="iconfont icongangbi"></i>
+          <span>3644字数</span>
+        </div>
+        <div className="tags">
+          # &nbsp;
+          <span>建站知识</span>
+          &nbsp;
+          <span>网络资源</span>
+          &nbsp;
+          <span>技术经验</span>
+          &nbsp;
+          <span>软件相关</span>
+          &nbsp;
+        </div>
+      </div>
+      <main>
+        <div className="crumbs">
+          <i className="iconfont iconfaxian-copy"></i>
+          <Link href="/">首页</Link>
+          <span>/</span>
+          <Link href="/">正文</Link>
+        </div>
+        <div className="article-container">
+          <img
+            src="../../static/images/components/article-card/main.jpg"
+            alt=""
+            className="banner"
+          />
+          <div
+            className="markdown-container"
+            dangerouslySetInnerHTML={{ __html: html }}
+          ></div>
+        </div>
+      </main>
     </div>
   );
 };
 
-Details.getInitialProps = async (ctx: NextPageContext) => {
-  const { aid } = ctx.query;
-  const res = await axios.get(servicePath.article + aid);
-  return { asyncData: { article: res.data } };
-};
-
-export default Details;
+export default Article;

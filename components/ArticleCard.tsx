@@ -12,13 +12,15 @@ const ArticleCard = () => {
         onMouseLeave={() => setActiveImg(false)}
         onMouseEnter={() => setActiveImg(true)}
       >
-        <div
-          className={['article-pic-overlay', activeImg ? 'active' : ''].join(
-            ' '
-          )}
-        >
-          不进来康康嘛？
-        </div>
+        <Link href="/details/1">
+          <div
+            className={['article-pic-overlay', activeImg ? 'active' : ''].join(
+              ' '
+            )}
+          >
+            进去康康
+          </div>
+        </Link>
         <img
           className={activeImg ? 'active' : ''}
           src="../static/images/components/article-card/main.jpg"
@@ -28,7 +30,7 @@ const ArticleCard = () => {
 
       <div className="intro">
         <h2>
-          <Link href="/">宝塔(BT)面板安装 AList 阿里云盘列表程序</Link>
+          <Link href="/details/1">宝塔(BT)面板安装 AList 阿里云盘列表程序</Link>
         </h2>
         <p>
           前言 经历了 2016
