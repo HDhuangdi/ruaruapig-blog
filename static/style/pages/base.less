@@ -1,0 +1,31 @@
+@cursorPointer: url('../../images/index/pointer.cur'), pointer !important;
+
+@font-face {
+  font-family: web-font;
+  src: url('../../fonts/siyuan.ttf');
+}
+@font-face {
+  font-family: Monaco;
+  src: url('../../fonts/Monaco.ttf');
+}
+
+* {
+  cursor: url('../../images/index/default.cur'), default;
+  font-family: web-font, sans-serif !important;
+  &::selection {
+    color: #fff;
+    background: #3d4c50;
+  }
+  a {
+    cursor: @cursorPointer;
+  }
+  code,
+  code * {
+    font-family: Monaco, sans-serif !important;
+    font-size: 13px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+}
