@@ -1,14 +1,14 @@
 import React from 'react';
 import '../static/style/pages/index.less';
 import ArticleCard from '../components/ArticleCard';
-import { Pagination } from 'antd';
+import MyPagination from '../components/Pagination';
 
 const Content = () => {
   return (
     <main>
       <div className="title">
-        <h1>Aries's Blog Ruaruapig.xyz</h1>
-        <small>小黄的主站</small>
+        <h1>Happiness lies in the autonomy.</h1>
+        <small>— Aristotle</small>
       </div>
       <div className="article-list">
         <ArticleCard></ArticleCard>
@@ -17,7 +17,7 @@ const Content = () => {
         <ArticleCard></ArticleCard>
         <ArticleCard></ArticleCard>
       </div>
-      <Pagination defaultCurrent={1} total={50} />
+      <MyPagination></MyPagination>
     </main>
   );
 };

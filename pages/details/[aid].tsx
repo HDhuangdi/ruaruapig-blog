@@ -4,6 +4,7 @@ import '../../static/style/pages/article-details.less';
 import marked from 'marked';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
+import MyPagination from '../../components/Pagination';
 
 const Article = () => {
   const [html, setHtml] = useState('');
@@ -23,8 +24,11 @@ const Article = () => {
     });
     setHtml(markdown ? marked(markdown) : null);
     setTimeout(() => {
-      hljs.initHighlighting();
-    }, 500);
+      let eleList = document.querySelectorAll('pre code');
+      eleList.forEach((ele) => {
+        ele.className += ' hljs';
+      });
+    });
   }, []);
 
   let markdown =
@@ -166,6 +170,55 @@ const Article = () => {
             className="markdown-container"
             dangerouslySetInnerHTML={{ __html: html }}
           ></div>
+        </div>
+        <div className="comment-editer">
+          <h4>发表评论</h4>
+          <div className="comment-form">
+            <label>评论</label>
+            <textarea
+              id=""
+              cols={30}
+              rows={5}
+              placeholder="说点什么吧"
+            ></textarea>
+            <label>名称（必填）：</label>
+            <input type="text" placeholder="姓名或昵称" maxLength={10} />
+            <button>发表评论</button>
+          </div>
+        </div>
+        <div className="comment-list">
+          <h5>666条评论</h5>
+          <div className="commnet-item">
+            <div className="comment-info">
+              <div className="comment-info-left">
+                <img
+                  src="../../static/images/article-details/avatar.png"
+                  alt=""
+                />
+              </div>
+              <div className="comment-info-right">
+                <h6>马化腾</h6>
+                <span>2020/12/19 13:13</span>
+              </div>
+            </div>
+            <div className="comment-detail">不错不错！</div>
+          </div>
+          <div className="commnet-item">
+            <div className="comment-info">
+              <div className="comment-info-left">
+                <img
+                  src="../../static/images/article-details/avatar.png"
+                  alt=""
+                />
+              </div>
+              <div className="comment-info-right">
+                <h6>马云</h6>
+                <span>2020/12/19 13:13</span>
+              </div>
+            </div>
+            <div className="comment-detail">小伙子有前途！</div>
+          </div>
+          <MyPagination></MyPagination>
         </div>
       </main>
     </div>

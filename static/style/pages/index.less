@@ -1,4 +1,5 @@
-@import 'base.less';
+@import '../base.less';
+
 main {
   position: relative;
   background-color: #f1f3f4;
@@ -7,13 +8,18 @@ main {
     padding: 10px 20px;
     background-color: #f9f9f9;
     h1 {
-      font-size: 36px;
+      font-size: 40px;
       font-weight: 300;
       margin: 0;
     }
     small {
-      color: #98a6ad;
-      font-size: 13px;
+      display: inline-block;
+      padding-right: 20px;
+      width: 100%;
+      text-align: right;
+      color: #656f72;
+      font-size: 25px;
+      font-family: signature-font, sans-serif !important;
     }
   }
   .article-list {
@@ -22,54 +28,5 @@ main {
     justify-content: space-between;
     align-items: center;
     padding: 20px 0;
-  }
-  .ant-pagination {
-    display: flex;
-    justify-content: center;
-    li {
-      margin: 0;
-      border: 0;
-      &:hover {
-        background-color: #eee !important;
-      }
-      button {
-        border: 0 !important;
-        background-color: #fff !important;
-        svg {
-          fill: #3a3f51 !important;
-        }
-        &:hover {
-          background-color: #eee !important;
-        }
-      }
-      &:first-child {
-        button {
-          border-top-left-radius: 4px !important;
-          border-bottom-left-radius: 4px !important;
-        }
-      }
-      &:last-child {
-        button {
-          border-top-right-radius: 4px !important;
-          border-bottom-right-radius: 4px !important;
-        }
-      }
-      a {
-        height: 100%;
-        line-height: 32px;
-        font-size: 12px;
-        font-weight: 300;
-        &:hover {
-          color: #3a3f51;
-        }
-      }
-      &.ant-pagination-item-active {
-        background-color: #3a3f51;
-
-        a {
-          color: #fff;
-        }
-      }
-    }
   }
 }

@@ -2,7 +2,7 @@ import App, { Container } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
 import 'antd/dist/antd.css';
-import '../static/style/pages/base.less';
+import '../static/style/base.less';
 import '../static/style/pages/app.less';
 import zhCN from 'antd/lib/locale/zh_CN';
 import { Col, ConfigProvider, Row, Tabs } from 'antd';
@@ -11,7 +11,10 @@ import MyHeader from '../Layout/Header';
 import Link from 'next/link';
 import MyFooter from '../Layout/Footer';
 import { timeFormater1 } from '../utils/time';
+import routerConfig from '../router';
 const { TabPane } = Tabs;
+
+routerConfig.routerInterceptor();
 
 type State = {
   height: number;
