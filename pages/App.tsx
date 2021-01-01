@@ -10,6 +10,7 @@ import MySider from '../Layout/Sider';
 import MyHeader from '../Layout/Header';
 import Link from 'next/link';
 import MyFooter from '../Layout/Footer';
+import { timeFormater1 } from '../utils/time';
 const { TabPane } = Tabs;
 
 type State = {
@@ -17,9 +18,26 @@ type State = {
   index: number;
   showScrollToTop: boolean;
   timer: any;
+  runningDays: string;
 };
 
 export default class MyApp extends App<any, any, State> {
+  CURSOR_TEXT = [
+    '富强',
+    '民主',
+    '文明',
+    '和谐',
+    '自由',
+    '平等',
+    '公正',
+    '法治',
+    '爱国',
+    '敬业',
+    '诚信',
+    '友善',
+  ];
+  START_TIME = 1609305607787;
+
   static async getInitialProps(arg: any) {
     let pageProps = {};
     if (arg.Component.getInitialProps) {
@@ -35,29 +53,32 @@ export default class MyApp extends App<any, any, State> {
       index: 0,
       showScrollToTop: false,
       timer: 0,
+      runningDays: '',
     };
   }
+
   componentDidMount() {
+    let option = {
+      day: true,
+      hour: true,
+    };
+
     this.setState({
       height: window.innerHeight,
+      runningDays: timeFormater1(this.START_TIME, new Date().getTime(), option),
     });
+    setInterval(() => {
+      this.setState({
+        runningDays: timeFormater1(
+          this.START_TIME,
+          new Date().getTime(),
+          option
+        ),
+      });
+    }, 1000);
+
     window.onclick = this.showCursorText.bind(this);
   }
-
-  cursorText = [
-    '富强',
-    '民主',
-    '文明',
-    '和谐',
-    '自由',
-    '平等',
-    '公正',
-    '法治',
-    '爱国',
-    '敬业',
-    '诚信',
-    '友善',
-  ];
 
   /**
    * 鼠标点击出现社会主义核心价值观
@@ -66,10 +87,10 @@ export default class MyApp extends App<any, any, State> {
   showCursorText(e: MouseEvent) {
     clearTimeout(this.state.timer);
     let myIndex = this.state.index;
-    if (myIndex >= this.cursorText.length) {
+    if (myIndex >= this.CURSOR_TEXT.length) {
       myIndex = 0;
     }
-    let text = this.cursorText[myIndex];
+    let text = this.CURSOR_TEXT[myIndex];
     let htmlSpanElement = document.createElement('span');
     let container = document.getElementById('cursor-text-container');
     htmlSpanElement.innerHTML = text;
@@ -296,7 +317,7 @@ export default class MyApp extends App<any, any, State> {
                             <i className="iconfont iconrili"></i>
                             <h6>运行天数</h6>
                           </div>
-                          <span>1年123天</span>
+                          <span>{this.state.runningDays}</span>
                         </li>
                       </ul>
                     </div>
