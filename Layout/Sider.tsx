@@ -6,7 +6,7 @@ const Sider = () => {
   return (
     <div className="sider">
       <div className="logo-container">
-        <img src="../static/images/components/sider/author.png" alt="" />
+        <img src="../static/images/components/sider/logo.png" alt="" />
       </div>
       <div className="divider"></div>
       <div className="author-container">
