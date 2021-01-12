@@ -7,8 +7,8 @@ const Content = () => {
   return (
     <main>
       <div className="title">
-        <h1>Happiness lies in the autonomy.</h1>
-        <small>— Aristotle</small>
+        <h1>In the next war, survivors will only envy the dead.</h1>
+        <small>— Khrushchev</small>
       </div>
       <div className="article-list">
         <ArticleCard></ArticleCard>

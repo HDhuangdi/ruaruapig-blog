@@ -26,14 +26,23 @@ const Footer = () => {
   }, []);
 
   return (
-    <Row className="footer-container">
-      <Col xs={0} sm={0} md={12} lg={12} xl={12} className="footer-left">
-        系统已经运行：{runningTimes}
-      </Col>
-      <Col xs={24} sm={24} md={12} lg={12} xl={12} className="footer-right">
-        基于NextJS · 由抓住一股仙气运维 · © 2020 Copyright
-      </Col>
-    </Row>
+    <div className="footer-container">
+      <Row className="system-info-container">
+        <Col xs={0} sm={0} md={12} lg={12} xl={12} className="runningTime">
+          系统已经运行：{runningTimes}
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} className="copyright">
+          基于NextJS · 由抓住一股仙气运维 · © 2020 Copyright
+        </Col>
+      </Row>
+      <Row className="beian-container">
+        <Col xs={24} sm={24} md={24} lg={24} xl={24} className="beian">
+          <a href="https://beian.miit.gov.cn" target="_blank">
+            浙ICP备2021001093号-1
+          </a>
+        </Col>
+      </Row>
+    </div>
   );
 };
 export default Footer;

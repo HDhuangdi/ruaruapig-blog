@@ -1,11 +1,37 @@
+@media screen and (max-width: 576px) {
+  .runningTime {
+    text-align: center !important;
+  }
+  .copyright {
+    text-align: center !important;
+  }
+}
+
 .footer-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 20px;
-  color: #1f222d;
-  font-size: 13px;
   background-color: #d4dbde;
-  text-align: center;
+  .system-info-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+    color: #1f222d;
+    font-size: 13px;
+    .runningTime {
+      text-align: left;
+    }
+    .copyright {
+      text-align: right;
+    }
+  }
+  .beian-container {
+    padding-left: 20px;
+    .beian {
+      text-align: left;
+      a {
+        font-size: 13px;
+        color: #5a6497;
+      }
+    }
+  }
 }
