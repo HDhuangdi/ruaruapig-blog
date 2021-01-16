@@ -40,6 +40,13 @@ const Footer = () => {
           <a href="https://beian.miit.gov.cn" target="_blank">
             浙ICP备2021001093号-1
           </a>
+          <a
+            target="_blank"
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010802011395"
+          >
+            <img src="../static/images/layout/footer/beian.png" />
+            <span>浙公网安备 33010802011395号</span>
+          </a>
         </Col>
       </Row>
     </div>
