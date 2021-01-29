@@ -2,7 +2,7 @@
   "name": "blog-app",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start",
     "type-check": "tsc"
@@ -22,9 +22,12 @@
     "moment": "^2.29.1",
     "next": "latest",
     "prettier": "^2.2.1",
+    "qs": "^6.9.6",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-keep-alive": "^2.5.2"
+    "react-keep-alive": "^2.5.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",

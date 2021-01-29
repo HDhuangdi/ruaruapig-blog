@@ -2,10 +2,14 @@ import React from 'react';
 import '../static/style/components/my-pagination.less';
 import { Pagination } from 'antd';
 
-const MyPagination = () => {
+const MyPagination = (props: any) => {
   return (
     <div className="my-pagination">
-      <Pagination defaultCurrent={1} total={50} />
+      <Pagination
+        defaultCurrent={props.pageInfo.pageNum}
+        total={props.pageInfo.total}
+        onChange={props.pageChangeHandler}
+      />
     </div>
   );
 };

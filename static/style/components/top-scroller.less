@@ -1,0 +1,52 @@
+@import '../base.less';
+@media screen and (min-width: 1200px) {
+}
+@media screen and (min-width: 992px) and(max-width: 1200px) {
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .scroll-to-top {
+    display: none !important;
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 768px) {
+  .scroll-to-top {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 576px) {
+  .scroll-to-top {
+    display: none !important;
+  }
+}
+
+@keyframes scroll-to-top {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, -2%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.scroll-to-top {
+  background-image: url('../../images/index/scroll.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 900px;
+  width: 70px;
+  display: block;
+  position: fixed;
+  right: 80px;
+  top: -10000px;
+  z-index: 2;
+  animation: scroll-to-top linear 2s infinite;
+  transition: top 1s;
+  cursor: url('../../images/index/pointer.cur'), pointer;
+  &.show {
+    top: -250px;
+  }
+}

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import '../static/style/components/article-card.less';
 
-const ArticleCard = () => {
+const ArticleCard = (props: any) => {
   let [activeImg, setActiveImg] = useState(false);
+
+  // console.log(props);
 
   return (
     <div className="article-card">
@@ -12,7 +14,7 @@ const ArticleCard = () => {
         onMouseLeave={() => setActiveImg(false)}
         onMouseEnter={() => setActiveImg(true)}
       >
-        <Link href="/details/1">
+        <Link href={'/details/' + props.article.id}>
           <div
             className={['article-pic-overlay', activeImg ? 'active' : ''].join(
               ' '
@@ -23,40 +25,37 @@ const ArticleCard = () => {
         </Link>
         <img
           className={activeImg ? 'active' : ''}
-          src="../static/images/components/article-card/main.jpg"
+          src={'https://' + props.article.bannerSrc}
           alt=""
         />
       </div>
 
       <div className="intro">
         <h2>
-          <Link href="/details/1">宝塔(BT)面板安装 AList 阿里云盘列表程序</Link>
+          <Link href="/aaaa">111</Link>
+          <Link href={'/details/' + props.article.id}>
+            {props.article.title}
+          </Link>
         </h2>
-        <p>
-          前言 经历了 2016
-          年的云盘关停潮之后，百度网盘和腾讯微云成为互联网企业中的行业代表，现在阿里也带来了两款云盘产品，分别是阿里云盘和
-          Teambition，今天我们要说的是前者，之前很多用过OneDrive列表
-          年的云盘关停潮之后，百度网盘和腾讯微云成为互联网企业中的行业代表，现在阿里也带来了两款云盘产品，分别是阿里云盘和
-          Teambition，今天我们要说的是前者，之前很多用过OneDrive列表
-        </p>
+        <p>{props.article.introduce}</p>
       </div>
       <div className="divider"></div>
       <div className="article-info">
         <div className="item">
           <i className="iconfont icongeren"></i>
-          <span>抓住一股仙气</span>
+          <span>{props.article.author}</span>
         </div>
         <div className="item">
           <i className="iconfont iconshijian"></i>
-          <span>2020年12月30日</span>
+          <span>{props.article.createTime}</span>
         </div>
         <div className="item">
           <i className="iconfont iconliulan"></i>
-          <span>408浏览</span>
+          <span>{props.article.views}浏览</span>
         </div>
         <div className="item">
           <i className="iconfont iconpinglun2"></i>
-          <span>3条评论</span>
+          <span>{props.article.thumbs}条评论</span>
         </div>
       </div>
     </div>
