@@ -2,22 +2,23 @@ import React, { useEffect, useState } from 'react';
 import '../static/style/pages/index.less';
 import ArticleCard from '../components/ArticleCard';
 import MyPagination from '../components/Pagination';
-import axios from '../http';
-import { NextPageContext } from 'next';
-import baseUrl from '../config/baseUrl';
+import { getArticleList } from '../http/article';
 
 const IndexPage = (props: any) => {
   let [pageInfo, setPageInfo] = useState(props.asyncData.pageInfo);
 
   useEffect(() => {
     //初始化页面数据 - CSR
-    axios.get(`/api/article/list`).then((res: any) => {
-      setPageInfo(res.data.data);
+    getArticleList(1, 10).then((res: any) => {
+      setPageInfo(res.data);
     });
   }, []);
 
+  //分页条改变处理函数
   const pageChangeHandler = (page: number, pageSize: number) => {
-    console.log(page, pageSize);
+    getArticleList(page, pageSize).then((res: any) => {
+      setPageInfo(res.data);
+    });
   };
 
   return (
@@ -42,20 +43,13 @@ const IndexPage = (props: any) => {
 };
 
 //初始化页面数据 - SSR
-IndexPage.getInitialProps = async (ctx: NextPageContext) => {
-  let env = process.env.NODE_ENV.toUpperCase();
-  let { page, pageSize } = ctx.query;
-  let _pageNum = Number(page) || 1;
-  let _pageSize = Number(pageSize) || 10;
-
-  const { data } = await axios.get(
-    // @ts-ignore
-    baseUrl[env] + `/article/list?pageNum=${_pageNum}&pageSize=${_pageSize}`
-  );
+IndexPage.getInitialProps = async () => {
+  let res: any;
+  res = await getArticleList(1, 10);
 
   return {
     asyncData: {
-      pageInfo: data.data,
+      pageInfo: res.data,
     },
   };
 };

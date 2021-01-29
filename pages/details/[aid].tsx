@@ -4,7 +4,6 @@ import '../../static/style/pages/article-details.less';
 import marked from 'marked';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
-import MyPagination from '../../components/Pagination';
 
 const Article = () => {
   const [html, setHtml] = useState('');
@@ -218,7 +217,6 @@ const Article = () => {
             </div>
             <div className="comment-detail">小伙子有前途！</div>
           </div>
-          <MyPagination></MyPagination>
         </div>
       </main>
     </div>
