@@ -1,36 +1,25 @@
-//获取页面数据
-import {
-  destroyLoadingMessage,
-  loadingMessageGenerator,
-  serverErrorMessageGenerator,
-} from '../utils/antdUtils';
-import axios from './index';
 import { message } from 'antd';
-import { AxiosResponse } from 'axios';
+import { promiseAPIGenerator } from '../utils/promiseUtils';
+import HttpRequestMethod from '../interfaces/HttpRequestMethod';
+import { mapObject2QueryString } from '../utils/commonUtils';
 
 /**
  * 获取文章列表
- * @param pageNum
- * @param pageSize
+ * @param data
  */
-const getArticleList = async (pageNum: number, pageSize = 10) => {
-  return new Promise((resolve: any) => {
-    loadingMessageGenerator(1);
-    axios
-      .get(`/article/list?pageNum=${pageNum}&pageSize=${pageSize}`)
-      .then((res: AxiosResponse) => {
-        destroyLoadingMessage(1);
-        if (res.data.code === 200) {
-          resolve(res.data);
-        } else {
-          message.error(res.data.message);
-        }
-      })
-      .catch(() => {
-        message.destroy(0);
-        serverErrorMessageGenerator();
-      });
-  });
+const getArticleList = async (data: any) => {
+  return promiseAPIGenerator(
+    HttpRequestMethod.GET,
+    `/article/list` + mapObject2QueryString(data),
+    (resolve: any, res: any) => {
+      if (res.data.code === 200) {
+        resolve(res.data);
+      } else {
+        if (!process.browser) return;
+        message.error(res.data.message);
+      }
+    }
+  );
 };
 
 export { getArticleList };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import '../static/style/components/article-card.less';
+import { timeFormater2 } from '../utils/timeUtils';
 
 const ArticleCard = (props: any) => {
   let [activeImg, setActiveImg] = useState(false);
@@ -47,7 +48,12 @@ const ArticleCard = (props: any) => {
         </div>
         <div className="item">
           <i className="iconfont iconshijian"></i>
-          <span>{props.article.createTime}</span>
+          <span>
+            {timeFormater2(
+              'YYYY年mm月dd日',
+              new Date(props.article.createTime)
+            )}
+          </span>
         </div>
         <div className="item">
           <i className="iconfont iconliulan"></i>

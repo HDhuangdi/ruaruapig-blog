@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
 import Link from 'next/link';
 import '../static/style/layout/right-sider.less';
-import { timeFormater1 } from '../utils/time';
+import { timeFormater1 } from '../utils/timeUtils';
 const { TabPane } = Tabs;
 
 const RightSider = () => {

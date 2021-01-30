@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../static/style/layout/footer.less';
 import { Row, Col } from 'antd';
-import { timeFormater1 } from '../utils/time';
+import { timeFormater1 } from '../utils/timeUtils';
 
 const Footer = () => {
   const START_TIME = 1609305607787;
