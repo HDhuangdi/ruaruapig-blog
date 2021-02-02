@@ -7,24 +7,47 @@ import axios from '../http';
 import { AxiosResponse } from 'axios';
 import HttpRequestMethod from '../interfaces/HttpRequestMethod';
 
-const promiseAPIGenerator = (
+function promiseAPIGenerator(
+  method: HttpRequestMethod,
+  url: string,
+  data: any,
+  callback: any
+): Promise<any>;
+function promiseAPIGenerator(
   method: HttpRequestMethod,
   url: string,
   callback: any
-) => {
+): Promise<any>;
+function promiseAPIGenerator(
+  method: HttpRequestMethod,
+  url: string,
+  data: any,
+  callback?: any
+) {
   return new Promise((resolve: any) => {
     loadingMessageGenerator(1);
-    // @ts-ignore
-    axios[method](url)
-      .then((res: AxiosResponse) => {
-        destroyLoadingMessage(1);
-        callback(resolve, res);
-      })
-      .catch(() => {
-        destroyLoadingMessage(1);
-        serverErrorMessageGenerator();
-      });
+    if (typeof data === 'object') {
+      axios[method](url, data)
+        .then((res: AxiosResponse) => {
+          destroyLoadingMessage(1);
+          callback(resolve, res);
+        })
+        .catch(() => {
+          destroyLoadingMessage(1);
+          serverErrorMessageGenerator();
+        });
+    } else if (typeof data === 'function') {
+      axios[method](url)
+        .then((res: AxiosResponse) => {
+          destroyLoadingMessage(1);
+          data(resolve, res);
+        })
+        .catch(() => {
+          destroyLoadingMessage(1);
+          serverErrorMessageGenerator();
+        });
+    }
   });
-};
+}
 
 export { promiseAPIGenerator };

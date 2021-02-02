@@ -9,7 +9,7 @@ const PageHead = () => {
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link
         rel="stylesheet"
-        href="http://at.alicdn.com/t/font_2299715_ye8gyur0e5.css"
+        href="http://at.alicdn.com/t/font_2299715_x78pm3g98qd.css"
       />
     </Head>
   );

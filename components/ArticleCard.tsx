@@ -33,7 +33,6 @@ const ArticleCard = (props: any) => {
 
       <div className="intro">
         <h2>
-          <Link href="/aaaa">111</Link>
           <Link href={'/details/' + props.article.id}>
             {props.article.title}
           </Link>
@@ -56,12 +55,12 @@ const ArticleCard = (props: any) => {
           </span>
         </div>
         <div className="item">
-          <i className="iconfont iconliulan"></i>
-          <span>{props.article.views}浏览</span>
+          <i className="iconfont iconredu"></i>
+          <span>{props.article.views}热度</span>
         </div>
         <div className="item">
-          <i className="iconfont iconpinglun2"></i>
-          <span>{props.article.thumbs}条评论</span>
+          <i className="iconfont icondianzan1"></i>
+          <span>{props.article.thumbs}喜欢</span>
         </div>
       </div>
     </div>

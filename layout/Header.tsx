@@ -1,13 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../static/style/layout/header.less';
 import Link from 'next/link';
+import { serachArticlesByKeyword } from '../http/article';
 
 const Header = () => {
+  let [keyword, setKeyword] = useState('');
+  let [searchReaultList, segSearchReaultList] = useState([]);
+  let [canSearch, setCanSearch] = useState(true);
+
+  const search = (e: any) => {
+    e.persist();
+    setKeyword(e.target.value);
+    if (canSearch) {
+      setCanSearch(false);
+      setTimeout(() => {
+        serachArticlesByKeyword({ keyword: e.target.value }).then(
+          (res: any) => {
+            segSearchReaultList(res.data);
+            setCanSearch(true);
+          }
+        );
+      }, 1000);
+    }
+  };
+
   return (
     <header className="my-header">
       <div className="search">
-        <input type="text" placeholder="Search..." />
+        <input
+          type="text"
+          placeholder="Search..."
+          value={keyword}
+          onChange={search}
+        />
         <i className="iconfont iconsousuo"></i>
+        <ul className="search-result-container">
+          {searchReaultList.map((article: any) => (
+            <li className="result-item" key={article.id}>
+              <Link href={'/details/' + article.id}>
+                <div className="result-title">{article.title}</div>
+              </Link>
+              <Link href={'/details/' + article.id}>
+                <div className="result-content">
+                  b我从阿萨德:<mark>啊</mark>撒大声地as
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="icons">
         <Link href="https://github.com/HDhuangdi">

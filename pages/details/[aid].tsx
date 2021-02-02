@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { NextPageContext, NextPage } from 'next';
 import Link from 'next/link';
 import '../../static/style/pages/article-details.less';
 import marked from 'marked';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
-import { NextPageContext } from 'next';
 import { getArticleList } from '../../http/article';
 import { timeFormater2 } from '../../utils/timeUtils';
+import { thumbArticleById } from '../../http/article';
+import { message, Popover } from 'antd';
+import moment from 'moment';
 
-const Article = (props: any) => {
+const Article: NextPage<any> = (props: any) => {
   const [html, setHtml] = useState('');
   const [articleInfo] = useState(props.asyncData.articleInfo);
 
@@ -42,6 +45,15 @@ const Article = (props: any) => {
     });
   };
 
+  /**
+   * 喜欢该文章
+   */
+  const thumbArticle = () => {
+    thumbArticleById({ articleId: props.query.aid }).then(() => {
+      message.success('点赞成功');
+    });
+  };
+
   return (
     <div className="article-details">
       <div className="title-container">
@@ -53,12 +65,12 @@ const Article = (props: any) => {
           <span>
             {timeFormater2('YYYY年mm月dd日', new Date(articleInfo.createTime))}
           </span>
-          <i className="iconfont iconliulan"></i>
-          <span>{articleInfo.views}次浏览</span>
-          <i className="iconfont iconpinglun2"></i>
-          <span>{articleInfo.thumbs} 条评论</span>
+          <i className="iconfont iconredu"></i>
+          <span>{articleInfo.views}热度</span>
+          <i className="iconfont icondianzan1"></i>
+          <span>{articleInfo.thumbs}个喜欢</span>
           <i className="iconfont icongangbi"></i>
-          <span>3644字数</span>
+          <span>{articleInfo.content.length}字数</span>
         </div>
         <div className="tags">
           #
@@ -84,53 +96,30 @@ const Article = (props: any) => {
             className="markdown-container"
             dangerouslySetInnerHTML={{ __html: html }}
           ></div>
-        </div>
-        <div className="comment-editer">
-          <h4>发表评论</h4>
-          <div className="comment-form">
-            <label>评论</label>
-            <textarea
-              id=""
-              cols={30}
-              rows={5}
-              placeholder="说点什么吧"
-            ></textarea>
-            <label>名称（必填）：</label>
-            <input type="text" placeholder="姓名或昵称" maxLength={10} />
-            <button>发表评论</button>
-          </div>
-        </div>
-        <div className="comment-list">
-          <h5>666条评论</h5>
-          <div className="commnet-item">
-            <div className="comment-info">
-              <div className="comment-info-left">
-                <img
-                  src="../../static/images/article-details/avatar.png"
-                  alt=""
-                />
-              </div>
-              <div className="comment-info-right">
-                <h6>马化腾</h6>
-                <span>2020/12/19 13:13</span>
-              </div>
+          <div className="copy-right-container">
+            <div className="left">
+              <i className="iconfont iconshijian"></i>
+              <span>
+                最后修改:{' '}
+                {moment(articleInfo.createTime).format('yyyy年MM月DD日')}
+              </span>
             </div>
-            <div className="comment-detail">不错不错！</div>
-          </div>
-          <div className="commnet-item">
-            <div className="comment-info">
-              <div className="comment-info-left">
-                <img
-                  src="../../static/images/article-details/avatar.png"
-                  alt=""
-                />
-              </div>
-              <div className="comment-info-right">
-                <h6>马云</h6>
-                <span>2020/12/19 13:13</span>
-              </div>
+            <div className="right">
+              <Popover content="转载请保留本文转载地址,著作权归作者所有">
+                <span>© 允许规范转载</span>
+              </Popover>
             </div>
-            <div className="comment-detail">小伙子有前途！</div>
+          </div>
+          <div className="thumb-container">
+            <button className="pay">
+              <i className="iconfont icon223yonghu_mima_yuechi3"></i> 赞赏
+            </button>
+            <button className="thumb" onClick={thumbArticle}>
+              <i className="iconfont icondianzan1"></i>喜欢
+            </button>
+          </div>
+          <div className="tips-container">
+            如果觉得我的文章对你有用，请随意赞赏
           </div>
         </div>
       </main>
@@ -147,6 +136,7 @@ Article.getInitialProps = async (ctx: NextPageContext) => {
     asyncData: {
       articleInfo: res.data.list[0],
     },
+    query: ctx.query,
   };
 };
 

@@ -13,6 +13,7 @@
     align-items: center;
     justify-content: center;
     height: 60%;
+    position: relative;
     input {
       width: 85%;
       border-top-left-radius: 18px;
@@ -45,7 +46,36 @@
       border-top-right-radius: 18px;
       border-bottom-right-radius: 18px;
     }
+    .search-result-container {
+      width: 200%;
+      max-height: 500px;
+      overflow-y: scroll;
+      position: absolute;
+      top: 110%;
+      left: 0;
+      z-index: 5;
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 10%);
+      border-radius: 2px;
+      padding: 5px 15px;
+      .result-item {
+        height: 50px;
+        margin-top: 10px;
+        .result-title {
+          color: #333;
+        }
+        .result-content {
+          color: #98a6ad;
+          mark {
+            padding: 0.2em;
+            color: #000;
+            background: #fcf8e3;
+          }
+        }
+      }
+    }
   }
+
   .icons {
     height: 100%;
     display: flex;
