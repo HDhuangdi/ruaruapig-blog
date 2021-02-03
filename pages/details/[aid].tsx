@@ -5,9 +5,12 @@ import '../../static/style/pages/article-details.less';
 import marked from 'marked';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
-import { getArticleList } from '../../http/article';
+import {
+  getArticleList,
+  thumbArticleById,
+  viewArticleById,
+} from '../../http/article';
 import { timeFormater2 } from '../../utils/timeUtils';
-import { thumbArticleById } from '../../http/article';
 import { message, Popover } from 'antd';
 import moment from 'moment';
 
@@ -17,6 +20,7 @@ const Article: NextPage<any> = (props: any) => {
 
   useEffect(() => {
     initHighLightJS();
+    viewArticleById({ articleId: articleInfo.id });
   }, []);
 
   /**
@@ -84,7 +88,7 @@ const Article: NextPage<any> = (props: any) => {
           <i className="iconfont iconfaxian-copy"></i>
           <Link href="/">首页</Link>
           <span>/</span>
-          <Link href="/">正文</Link>
+          <Link href="javascript:;">正文</Link>
         </div>
         <div className="article-container">
           <img

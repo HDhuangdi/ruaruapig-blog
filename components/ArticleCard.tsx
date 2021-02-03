@@ -6,8 +6,6 @@ import { timeFormater2 } from '../utils/timeUtils';
 const ArticleCard = (props: any) => {
   let [activeImg, setActiveImg] = useState(false);
 
-  // console.log(props);
-
   return (
     <div className="article-card">
       <div

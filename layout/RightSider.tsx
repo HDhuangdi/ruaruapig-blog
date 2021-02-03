@@ -97,7 +97,7 @@ const RightSider = () => {
                   </div>
                   <div className="hot-article-right">
                     <Link href={'/details/' + article.id}>{article.title}</Link>
-                    <div className="hot-article-comments">
+                    <div className="hot-article-info">
                       <i className="iconfont icondianzan1"></i>
                       <span>{article.thumbs}</span>
                     </div>
@@ -121,7 +121,7 @@ const RightSider = () => {
                   </div>
                   <div className="hot-article-right">
                     <Link href={'/details/' + article.id}>{article.title}</Link>
-                    <div className="hot-article-comments">
+                    <div className="hot-article-info">
                       <i className="iconfont iconredu"></i>
                       <span>{article.views}</span>
                     </div>
@@ -144,7 +144,7 @@ const RightSider = () => {
           </li>
           <li>
             <div>
-              <i className="iconfont iconpinglun"></i>
+              <i className="iconfont iconzuji"></i>
               <h6>访客数量</h6>
             </div>
             <span>{visitorCounts}个小可爱</span>
